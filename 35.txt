@@ -1,0 +1,61 @@
+from ultralytics import YOLO
+import cv2
+ 
+# 加載 YOLOv8 模型
+model = YOLO('yolov8n.pt')  # Nano 模型
+ 
+# 圖片檢測
+image_path = 'image.jpg'  # 替換為您的圖片路徑
+results = model(image_path)
+ 
+# 顯示檢測結果
+annotated_image = results[0].plot()
+cv2.imshow('YOLOv8 Detection', annotated_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+from ultralytics import YOLO
+
+# 初始化 YOLO 模型
+model = YOLO('yolov8n.pt')  # 使用預訓練的 Nano 模型
+
+# 開始訓練
+model.train(data='datasets/coco.yaml', epochs=50, batch=16, imgsz=640)
+
+# 訓練完成後，模型會保存至 runs/train/exp/weights/best.pt
+COCO.yaml
+train: datasets/train/images
+val: datasets/val/images
+nc: 80  # 類別數量
+names: [ 'person', 'bicycle', 'car', 'motorcycle', ... ]  # 類別名稱
+
+from ultralytics import YOLO
+
+# 加載訓練完成的模型
+model = YOLO('runs/train/exp/weights/best.pt')
+
+# 評估模型
+metrics = model.val(data='datasets/coco.yaml')
+print(metrics)  # 輸出 mAP、精度、召回率等指標
+
+from ultralytics import YOLO
+import cv2
+
+# 加載自定義模型
+model = YOLO('runs/train/exp/weights/best.pt')
+
+# 圖片檢測
+image_path = 'image.jpg'
+results = model(image_path)
+
+# 顯示結果
+annotated_image = results[0].plot()
+cv2.imshow('Custom YOLOv8 Detection', annotated_image)
+cv2.waitKey(0)
+cv2.destroyAllWindows()
+
+from ultralytics import YOLO
+
+# 將模型導出為 ONNX 格式
+model = YOLO('runs/train/exp/weights/best.pt')
+model.export(format='onnx')

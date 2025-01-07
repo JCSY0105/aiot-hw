@@ -1,0 +1,8 @@
+#更新系統套件清單：
+sudo apt update
+            
+#安裝 OpenCV 及相關套件：
+sudo apt install libopencv-dev python3-opencv
+            
+#驗證安裝：
+python3 -c "import cv2; print(cv2.__version__)"
